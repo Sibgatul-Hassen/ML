@@ -3,6 +3,7 @@ import numpy as np
 from collections import Counter
 import re
 import os
+from textblob import TextBlob
 
 print("=" * 100)
 print("ADVANCED SENTIMENT ANALYSIS WITH TOPIC EXTRACTION")
@@ -24,8 +25,6 @@ print(f"✓ Loaded {len(df)} posts\n")
 # ===== 1. ADVANCED SENTIMENT ANALYSIS =====
 print("🔍 ADVANCED SENTIMENT ANALYSIS")
 print("-" * 100)
-
-from textblob import TextBlob
 
 def advanced_sentiment(text):
     """Analyze sentiment with subjectivity"""
