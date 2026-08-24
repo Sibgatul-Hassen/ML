@@ -10,7 +10,7 @@ print("=" * 100)
 print()
 
 # Configuration
-csv_file = "dhaka_posts_20251119_224551.csv"
+csv_file = "final_dhaka_dataset_clean.csv"
 output_dir = "advanced_sentiment_analysis"
 os.makedirs(output_dir, exist_ok=True)
 
@@ -323,7 +323,7 @@ summary += f"""
   5. 05_posts_with_advanced_analysis.csv
 
 ✅ KEY FINDINGS:
-  • Most discussed: Real Estate (61.7%), Technology (52.8%)
+  • Most discussed: {', '.join(f"{row['topic']} ({row['total_posts']/len(df)*100:.1f}%)" for _, row in topic_sentiment_df.head(2).iterrows())}
   • Most positive topic: {topic_sentiment_df.loc[topic_sentiment_df['positive'] / topic_sentiment_df['total_posts'] == (topic_sentiment_df['positive'] / topic_sentiment_df['total_posts']).max()]['topic'].values[0] if len(topic_sentiment_df) > 0 else 'N/A'}
   • Most common emotion: {emotion_counts.index[0]}
   • Engagement avg: {df['upvotes'].mean():.1f} upvotes, {df['comments'].mean():.1f} comments

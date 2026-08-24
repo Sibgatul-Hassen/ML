@@ -2,7 +2,7 @@ import pandas as pd
 import re
 from datetime import datetime
 
-SRC = 'dhaka_posts_20251119_224551.csv'
+SRC = 'final_dhaka_dataset_clean.csv'
 OUT_ALL = 'dhaka_people_posts_combined.csv'
 OUT_BREAKDOWN = 'dhaka_people_posts_breakdown.csv'
 
@@ -37,7 +37,7 @@ areas = [
 kw_parts = []
 for a in areas + ['dhaka']:
     a = a.strip().lower()
-    a = re.sub(r"\s+", r"[\s-]", re.escape(a))  # spaces/hyphens interchangeable
+    a = re.sub(r"\s+", r"[\\s-]", re.escape(a))  # spaces/hyphens interchangeable
     kw_parts.append(fr"\b{a}\b")
 pattern = re.compile('|'.join(kw_parts))
 

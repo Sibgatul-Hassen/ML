@@ -201,7 +201,7 @@ print("=" * 100)
 dhaka_sentiment = df_dhaka['sentiment'].value_counts()
 non_dhaka_sentiment = df_non_dhaka['sentiment'].value_counts()
 
-print(f"\n{'Metric':<25} {'Dhaka (328)':<20} {'General BD (166)':<20}")
+print(f"\n{'Metric':<25} {f'Dhaka ({len(df_dhaka)})':<20} {f'General BD ({len(df_non_dhaka)})':<20}")
 print("-" * 65)
 print(f"{'Positive':<25} {dhaka_sentiment.get('positive', 0):>6} ({dhaka_sentiment.get('positive', 0)/len(df_dhaka)*100:>5.1f}%) {non_dhaka_sentiment.get('positive', 0):>6} ({non_dhaka_sentiment.get('positive', 0)/len(df_non_dhaka)*100:>5.1f}%)")
 print(f"{'Negative':<25} {dhaka_sentiment.get('negative', 0):>6} ({dhaka_sentiment.get('negative', 0)/len(df_dhaka)*100:>5.1f}%) {non_dhaka_sentiment.get('negative', 0):>6} ({non_dhaka_sentiment.get('negative', 0)/len(df_non_dhaka)*100:>5.1f}%)")
@@ -330,22 +330,21 @@ print("📋 KEY INSIGHTS")
 print("=" * 100)
 
 print(f"""
-DHAKA-FOCUSED POSTS (328):
-  • More solution-seeking (72.9% neutral = asking for help)
-  • 21.3% positive - when finding good services
-  • Very low anger (1.2%)
-  • Topics: Shopping, Education, Travel, Tech, Food, Healthcare
+DHAKA-FOCUSED POSTS ({len(df_dhaka)}):
+  • {(df_dhaka['sentiment'] == 'neutral').sum() / len(df_dhaka) * 100:.1f}% neutral (asking for help)
+  • {(df_dhaka['sentiment'] == 'positive').sum() / len(df_dhaka) * 100:.1f}% positive - when finding good services
+  • {(df_dhaka['sentiment'] == 'negative').sum() / len(df_dhaka) * 100:.1f}% negative
 
-GENERAL BANGLADESH POSTS (166):
+GENERAL BANGLADESH POSTS ({len(df_non_dhaka)}):
   • More critical/political ({(df_non_dhaka['sentiment'] == 'negative').sum() / len(df_non_dhaka) * 100:.1f}% negative)
-  • Mix of current events, politics, personal stories
-  • Topics: Politics, Healthcare, Education, Transportation, Sports
-  
+  • {(df_non_dhaka['sentiment'] == 'positive').sum() / len(df_non_dhaka) * 100:.1f}% positive
+  • {(df_non_dhaka['sentiment'] == 'neutral').sum() / len(df_non_dhaka) * 100:.1f}% neutral
+
 MAIN DIFFERENCE:
   ✓ Dhaka posts = "Where can I find X?" (practical)
   ✗ General BD posts = "This is wrong!" (critical/political)
-  
-OVERALL DATASET (494 posts):
+
+OVERALL DATASET ({len(df_all)} posts):
   • {(df_all['sentiment'] == 'positive').sum()} positive ({(df_all['sentiment'] == 'positive').sum() / len(df_all) * 100:.1f}%)
   • {(df_all['sentiment'] == 'neutral').sum()} neutral ({(df_all['sentiment'] == 'neutral').sum() / len(df_all) * 100:.1f}%)
   • {(df_all['sentiment'] == 'negative').sum()} negative ({(df_all['sentiment'] == 'negative').sum() / len(df_all) * 100:.1f}%)

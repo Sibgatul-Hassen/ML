@@ -3,30 +3,30 @@
 ============================================
 
 📈 DATASET:
-  • Total Posts: 494
+  • Total Posts: 1854
   • Subreddits: bangladesh, dhaka
-  • Date Range: 2025-08-25 23:30:45 to 2025-11-19 22:28:22
+  • Date Range: 2013-02-12 21:23:38 to 2025-11-23 11:48:49
 
 💬 SENTIMENT DISTRIBUTION:
-  • Positive: 217 (43.9%)
-  • Neutral: 242 (49.0%)
-  • Negative: 35 (7.1%)
-  • Avg Polarity: 0.107
-  • Avg Subjectivity: 0.359
+  • Positive: 796 (42.9%)
+  • Neutral: 930 (50.2%)
+  • Negative: 128 (6.9%)
+  • Avg Polarity: 0.103
+  • Avg Subjectivity: 0.360
 
 😊 EMOTION DISTRIBUTION:
-  • neutral: 293 (59.3%)
-  • joy: 120 (24.3%)
-  • trust: 39 (7.9%)
-  • anger: 21 (4.3%)
-  • sadness: 11 (2.2%)
+  • neutral: 1127 (60.8%)
+  • joy: 441 (23.8%)
+  • anger: 110 (5.9%)
+  • trust: 103 (5.6%)
+  • fear: 35 (1.9%)
 
 🏷️  TOP TOPICS:
-  5. Housing/Real Estate: 311 posts
-  11. Technology/Gadgets: 263 posts
-  1. Education/Career: 168 posts
-  12. Travel/Transportation: 124 posts
-  9. Shopping/Commerce: 122 posts
+  11. Technology/Gadgets: 987 posts
+  5. Housing/Real Estate: 894 posts
+  1. Education/Career: 834 posts
+  9. Shopping/Commerce: 416 posts
+  6. Infrastructure/Urban: 387 posts
 
 📁 OUTPUT FILES:
   1. 01_topic_sentiment_analysis.csv
@@ -36,7 +36,7 @@
   5. 05_posts_with_advanced_analysis.csv
 
 ✅ KEY FINDINGS:
-  • Most discussed: Real Estate (61.7%), Technology (52.8%)
-  • Most positive topic: Relationships/Social
+  • Most discussed: Technology/Gadgets (53.2%), Housing/Real Estate (48.2%)
+  • Most positive topic: Food/Dining
   • Most common emotion: neutral
-  • Engagement avg: 15.0 upvotes, 13.4 comments
+  • Engagement avg: 15.0 upvotes, 12.7 comments

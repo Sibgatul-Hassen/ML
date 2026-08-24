@@ -18,7 +18,7 @@ bertopic_available = False  # BERTopic requires C++ build tools, skip for now
 print("⚠️  BERTopic skipped (requires C++ build tools). Using RoBERTa + Emotion models instead.")
 
 # Configuration
-csv_file = "dhaka_posts_20251119_224551.csv"
+csv_file = "final_dhaka_dataset_clean.csv"
 output_dir = "enhanced_sentiment_analysis"
 os.makedirs(output_dir, exist_ok=True)
 
@@ -331,8 +331,6 @@ summary_report += f"""
   • Embeddings: Sentence Transformers
 
 🎯 KEY INSIGHTS:
-  • Most discussed topics: Real Estate (61.7%), Technology (52.8%), Shopping (24.7%)
-  • Most positive sentiment: Relationships (60.0%), Food (55.5%), Travel (51.9%)
   • Engagement: {df['upvotes'].mean():.1f} avg upvotes, {df['comments'].mean():.1f} avg comments
   • Most common emotions: {emotion_counts.index[0] if len(emotion_counts) > 0 else 'unknown'}
 

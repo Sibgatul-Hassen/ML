@@ -5,8 +5,8 @@ from datetime import datetime
 import re
 import os
 
-INPUT_FILE = 'e:/Reddit/final_dhaka_dataset.json'
-OUTPUT_FILE = 'e:/Reddit/combined_dhaka_overview.html'
+INPUT_FILE = 'final_dhaka_dataset_clean.json'
+OUTPUT_FILE = 'combined_dhaka_overview.html'
 
 def generate_report():
     if not os.path.exists(INPUT_FILE):

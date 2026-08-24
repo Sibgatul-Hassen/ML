@@ -101,8 +101,9 @@ for idx, (topic, data) in enumerate(sorted_topics, 1):
 print()
 
 # ===== 2. HOUSING/REAL ESTATE IN DETAIL =====
+housing_pct = topic_map['Housing/Real Estate']['posts'] / len(df) * 100
 print("=" * 100)
-print("🏠 HOUSING & REAL ESTATE (63% of discussions)")
+print(f"🏠 HOUSING & REAL ESTATE ({housing_pct:.0f}% of discussions)")
 print("-" * 100)
 
 housing_df = df[df['topics'].str.contains('Housing/Real Estate', na=False)]
@@ -128,8 +129,9 @@ for concern, keywords in housing_keywords.items():
 print()
 
 # ===== 3. TECHNOLOGY/GADGETS IN DETAIL =====
+tech_pct = topic_map['Technology/Gadgets']['posts'] / len(df) * 100
 print("=" * 100)
-print("📱 TECHNOLOGY & GADGETS (53% of discussions)")
+print(f"📱 TECHNOLOGY & GADGETS ({tech_pct:.0f}% of discussions)")
 print("-" * 100)
 
 tech_df = df[df['topics'].str.contains('Technology/Gadgets', na=False)]
@@ -155,8 +157,9 @@ for concern, keywords in tech_keywords.items():
 print()
 
 # ===== 4. EDUCATION/CAREER IN DETAIL =====
+edu_pct = topic_map['Education/Career']['posts'] / len(df) * 100
 print("=" * 100)
-print("🎓 EDUCATION & CAREER (34% of discussions)")
+print(f"🎓 EDUCATION & CAREER ({edu_pct:.0f}% of discussions)")
 print("-" * 100)
 
 edu_df = df[df['topics'].str.contains('Education/Career', na=False)]
@@ -340,79 +343,35 @@ print("=" * 100)
 print("📋 SUMMARY - WHAT DHAKA PEOPLE ARE REALLY TALKING ABOUT")
 print("=" * 100)
 
-summary = """
-🏠 HOUSING (63% of posts) - THE #1 TOPIC
-   ➜ People struggling to find affordable apartments in Dhaka
-   ➜ Asking about neighborhoods: Gulshan, Banani, Dhanmondi, Mirpur
-   ➜ Concerns: High prices, landlord issues, quality of life
-   ➜ Sentiment: 47% positive (people still hopeful about finding homes)
+summary_lines = ["", "TOP TOPICS BY SHARE OF POSTS:"]
+for topic, data in sorted_topics:
+    if data['posts'] == 0:
+        continue
+    pct = data['posts'] / len(df) * 100
+    topic_df_all = df[df['topics'].str.contains(re.escape(topic), na=False)]
+    topic_pos_pct = (topic_df_all['sentiment'] == 'positive').sum() / len(topic_df_all) * 100 if len(topic_df_all) else 0
+    summary_lines.append(f"   • {topic}: {data['posts']} posts ({pct:.0f}%) — {topic_pos_pct:.0f}% positive sentiment")
 
-📱 TECHNOLOGY (53% of posts) - THE #2 OBSESSION  
-   ➜ Buying/selling phones, laptops, gadgets
-   ➜ Internet quality complaints (especially video call stability)
-   ➜ Gaming community discussions
-   ➜ Sentiment: 49% positive (tech enthusiasts, but frustrated with pricing)
+if problems:
+    summary_lines.append("")
+    summary_lines.append("TOP PROBLEMS PEOPLE ARE COMPLAINING ABOUT (by engagement):")
+    for idx, (prob, score) in enumerate(sorted(problems.items(), key=lambda x: x[1], reverse=True), 1):
+        summary_lines.append(f"   {idx}. {prob} (engagement score: {score})")
 
-🎓 EDUCATION & CAREER (34% of posts)
-   ➜ Students stressed about HSC/SSC exams
-   ➜ University admissions and course selections
-   ➜ Job hunting (interviews, opportunities abroad)
-   ➜ Career guidance needed
-   ➜ Sentiment: 45% positive (cautious optimism about futures)
+if happiness:
+    summary_lines.append("")
+    summary_lines.append("WHAT BRINGS MOST JOY (by engagement, positive posts):")
+    for idx, (happy, score) in enumerate(sorted(happiness.items(), key=lambda x: x[1], reverse=True), 1):
+        summary_lines.append(f"   {idx}. {happy} (engagement score: {score})")
 
-✈️ TRAVEL & TRANSPORTATION (25% of posts)
-   ➜ Domestic flight bookings
-   ➜ Visits to Cox's Bazar, Sylhet, Chittagong
-   ➜ Traffic and metro complaints
-   ➜ Immigration/visa issues
-   ➜ Sentiment: 49% positive (people want to explore)
+overall_positive_pct = (df['sentiment'] == 'positive').sum() / len(df) * 100
+overall_neutral_pct = (df['sentiment'] == 'neutral').sum() / len(df) * 100
+overall_negative_pct = (df['sentiment'] == 'negative').sum() / len(df) * 100
 
-❤️ RELATIONSHIPS (23% of posts)
-   ➜ Marriage and dating discussions  
-   ➜ Relationship advice
-   ➜ Women's safety concerns
-   ➜ Sentiment: 57% positive (HIGHEST! People are hopeful about love)
+summary_lines.append("")
+summary_lines.append(f"OVERALL VIBE ({len(df)} posts): {overall_positive_pct:.1f}% positive, {overall_neutral_pct:.1f}% neutral, {overall_negative_pct:.1f}% negative")
 
-🍽️ FOOD & DINING (22% of posts)
-   ➜ Restaurant recommendations
-   ➜ Best food spots in Dhaka
-   ➜ Recipe sharing
-   ➜ Sentiment: 55% positive (Food brings joy!)
-
-💰 SHOPPING (25% of posts)
-   ➜ Where to buy specific items
-   ➜ Price comparisons
-   ➜ Online vs offline shopping
-   ➜ Sentiment: 48% positive
-
-⚠️ TOP PROBLEMS PEOPLE COMPLAIN ABOUT:
-   1. Traffic & Transportation congestion
-   2. Internet quality & speed issues
-   3. Job opportunities (especially abroad)
-   4. Cost of living & affordability
-   5. Healthcare accessibility
-   6. Safety & security (especially for women)
-   7. Education system quality
-
-✨ WHAT BRINGS MOST JOY (HIGHEST POSITIVE SENTIMENT):
-   1. Relationships & Romance (57% positive)
-   2. Food & Dining (55% positive)
-   3. Travel & Tourism (52% positive)
-   4. Sports (50% positive)
-
-📊 OVERALL VIBE: 43.9% positive, 49% neutral, 7.1% negative
-   ➜ People are mostly neutral/asking for help (problem-solving focused)
-   ➜ When happy, they're REALLY happy (relationships & food topics)
-   ➜ Main pain points are practical/logistical
-   ➜ Strong community spirit: People helping each other with recommendations
-
-🎯 ACTION ITEMS FOR DHAKA BUSINESSES:
-   • Real estate: Better app/platform for flat hunting
-   • Tech: Better internet service providers, cheaper gadgets
-   • Food: More dining reviews, delivery options
-   • Transportation: Carpooling, efficient commute solutions
-   • Education: Better job placement support
-"""
+summary = "\n".join(summary_lines) + "\n"
 
 print(summary)
 
